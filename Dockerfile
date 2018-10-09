@@ -1,8 +1,9 @@
-FROM hashicorp/terraform:0.11.8
+ARG TERRAFORM_VERSION=latest
+FROM hashicorp/terraform:${TERRAFORM_VERSION}
 
-ENV TERRAGRUNT_VERSION=0.16.14
+ENV TERRAGRUNT_VERSION=0.17.0
 
-ENV KUBECTL_VERSION=v1.10.0
+ENV KUBECTL_VERSION=1.10.0
 
 ENV HELM_VERSION=2.11.0
 
@@ -23,7 +24,7 @@ RUN apk add --no-cache \
     cd /tmp && \
     curl -sLo /usr/local/bin/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 && \
         chmod +x /usr/local/bin/terragrunt && \
-    curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
+    curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
         chmod +x /usr/local/bin/kubectl && \
     curl -sL https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar xz && \
         mv linux-amd64/helm /usr/local/bin/helm && \
@@ -36,6 +37,9 @@ RUN apk add --no-cache \
             --bash-completion=false \
             --disable-installation-options \
         && \
-    rm -rf /tmp/*
+    rm -rf /tmp/* && \
+    mkdir /deploy
 
-ENTRYPOINT [ "bash" ]
+WORKDIR /deploy
+
+ENTRYPOINT [ "terragrunt" ]
