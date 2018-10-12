@@ -19,6 +19,7 @@ RUN apk add --no-cache \
         bash \
         python \
         ca-certificates \
+        jq \
     && \
     mkdir -p /tmp && \
     cd /tmp && \
