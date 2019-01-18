@@ -13,6 +13,7 @@
 - kubectl
 - terraform
 - terragrunt
+- aws-cli
 
 ## Reference
 

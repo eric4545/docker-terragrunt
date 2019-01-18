@@ -21,6 +21,7 @@ RUN apk add --no-cache \
         python \
         ca-certificates \
         jq \
+        aws-cli \
     && \
     mkdir -p /tmp && \
     cd /tmp && \
