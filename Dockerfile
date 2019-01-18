@@ -1,10 +1,10 @@
-ARG TERRAFORM_VERSION=latest
+# https://github.com/hashicorp/terraform/releases
+ARG TERRAFORM_VERSION=0.11.11
 FROM hashicorp/terraform:${TERRAFORM_VERSION}
 
-ENV TERRAGRUNT_VERSION=0.17.3
-
+# https://github.com/gruntwork-io/terragrunt/releases
+ENV TERRAGRUNT_VERSION=0.17.4
 ENV KUBECTL_VERSION=1.13.0
-
 ENV HELM_VERSION=2.12.0
 
 ENV GCLOUD_SDK_PATH=/opt/google-cloud-sdk
