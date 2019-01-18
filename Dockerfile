@@ -6,23 +6,25 @@ FROM hashicorp/terraform:${TERRAFORM_VERSION}
 ENV TERRAGRUNT_VERSION=0.17.4
 ENV KUBECTL_VERSION=1.13.0
 ENV HELM_VERSION=2.12.0
-
 ENV GCLOUD_SDK_PATH=/opt/google-cloud-sdk
 # https://cloud.google.com/sdk/docs/release-notes
-ENV GCLOUD_SDK_VERSION=227.0.0
+ENV GCLOUD_SDK_VERSION=230.0.0
 ENV CLOUDSDK_CORE_DISABLE_PROMPTS=1
 ENV CLOUDSDK_PYTHON_SITEPACKAGES=0
 ENV PATH=$PATH:/opt/google-cloud-sdk/bin
+ENV AWS_CLI_VERSION=1.16.91
 
 RUN apk add --no-cache \
         curl-dev \
         curl \
         bash \
         python \
+        py-pip \
         ca-certificates \
         jq \
-        aws-cli \
     && \
+    pip install --upgrade awscli==$AWS_CLI_VERSION && \
+    apk --purge del py-pip && \
     mkdir -p /tmp && \
     cd /tmp && \
     curl -sLo /usr/local/bin/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 && \
